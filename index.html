@@ -1,1 +1,104 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <title>PokéAtlas - Catalogue Pokémon</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fa;
+      color: #172d48;
+    }
+    header {
+      background: #172d48;
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+    nav {
+      background: #e8b52b;
+      padding: 15px;
+      text-align: center;
+    }
+    nav a {
+      color: #172d48;
+      margin: 10px;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 25px;
+    }
+    .catalogues {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit, minmax(220px, 1fr)
+      );
+      gap: 20px;
+    }
+    .carte {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #0001;
+    }
+    .carte a { color: #145c9e; }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PokéAtlas</h1>
+    <p>L'encyclopédie des cartes Pokémon</p>
+  </header>
+
+  <nav>
+    <a href="#france">France</a>
+    <a href="#japon">Japon</a>
+  </nav>
+
+  <main>
+    <h2>Bienvenue sur PokéAtlas</h2>
+    <p>
+      Explore les extensions, les cartes
+      et les produits scellés Pokémon.
+    </p>
+
+    <div class="catalogues">
+      <section class="carte" id="france">
+        <h2>🇫🇷 Catalogue français</h2>
+        <p>
+          Extensions, boosters, ETB,
+          UPC, coffrets et cartes.
+        </p>
+        <p>Catalogue en préparation.</p>
+      </section>
+
+      <section class="carte" id="japon">
+        <h2>🇯🇵 Catalogue japonais</h2>
+        <p>
+          Extensions japonaises,
+          booster boxes et cartes.
+        </p>
+        <p>Catalogue en préparation.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    PokéAtlas - Projet indépendant
+    non affilié à Pokémon.
+  </footer>
+</body>
+</html>
+
