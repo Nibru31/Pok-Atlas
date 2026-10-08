@@ -4,391 +4,506 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PokéAtlas - Encyclopédie Pokémon</title>
+<title>PokéAtlas | Encyclopédie des cartes Pokémon</title>
+<meta name="description" content="Explorez les extensions et cartes Pokémon françaises et japonaises sur PokéAtlas.">
 <style>
-:root {
-  --bg:#071525;
-  --panel:#112840;
-  --gold:#f5c45e;
-  --text:#eef5ff;
-  --muted:#a8bed4;
+:root{
+  --bg:#071421;--panel:#10263c;--panel2:#17344f;
+  --gold:#f3c66d;--text:#f1f6fc;--muted:#a9bed2;
+  --border:#36516b;--blue:#60b9ff;
 }
-* {box-sizing:border-box}
-body {
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+header{
+  position:sticky;top:0;z-index:10;background:#081725ee;
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
 }
-header {
-  background:#08192d;
-  border-bottom:1px solid #425873;
-  padding:18px 5%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:15px;
-}
-.logo {
-  font-size:30px;
-  font-weight:bold;
-  color:var(--gold);
-}
-nav {display:flex;gap:20px;flex-wrap:wrap}
-nav a {color:white;text-decoration:none}
-nav a:hover {color:var(--gold)}
-.hero {
-  text-align:center;
-  padding:75px 20px;
+.nav{max-width:1250px;margin:auto;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.logo{font-weight:900;font-size:27px;color:var(--gold)}
+nav{display:flex;gap:20px;flex-wrap:wrap}
+nav a{color:var(--text);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--gold)}
+.hero{
+  min-height:380px;text-align:center;padding:75px 20px;
   background:
-    radial-gradient(circle at 80% 20%,#36548c88,transparent 45%),
-    radial-gradient(circle at 15% 70%,#89652e55,transparent 45%),
-    linear-gradient(135deg,#102c4c,#071525);
-  border-bottom:1px solid #405575;
+  radial-gradient(circle at 15% 25%,#d39a392b,transparent 30%),
+  radial-gradient(circle at 85% 60%,#3579cb40,transparent 35%),
+  linear-gradient(140deg,#12314f,#071421 70%);
+  border-bottom:1px solid var(--border)
 }
-.hero h1 {
-  font-size:clamp(36px,6vw,68px);
-  color:var(--gold);
-  margin:10px 0;
+.eyebrow{color:var(--gold);font-size:12px;letter-spacing:3px;font-weight:bold}
+.hero h1{font-size:clamp(45px,8vw,85px);color:var(--gold);margin:12px 0;text-shadow:0 5px 25px #0008}
+.hero p{color:var(--muted);line-height:1.7}
+.searchbar{display:flex;max-width:680px;margin:28px auto 0}
+.searchbar input{flex:1;min-width:0;padding:17px;border:1px solid var(--border);background:#081b2e;color:white;border-radius:12px 0 0 12px}
+.searchbar button{border-radius:0 12px 12px 0}
+.btn{border:0;background:var(--gold);color:#102033;padding:13px 20px;border-radius:9px;font-weight:800}
+.btn:hover{background:#ffdb95}
+.btn-outline{border:1px solid var(--gold);background:transparent;color:var(--gold)}
+.container{max-width:1250px;margin:auto;padding:30px 20px}
+h2{color:var(--gold);font-size:26px;margin:38px 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:18px}
+.countries{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.country,.card,.feature,.detail{
+  border:1px solid var(--border);background:linear-gradient(150deg,var(--panel2),var(--panel));
+  border-radius:17px;padding:22px
 }
-.hero p {color:#d1dff0}
-.search {
-  display:flex;
-  max-width:650px;
-  margin:30px auto;
+.country{min-height:210px}
+.country h3{font-size:25px;margin:10px 0}
+.country p,.card p,.feature p,.detail p{color:var(--muted);line-height:1.6}
+.country .btn{margin-top:10px}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.feature{min-height:125px}
+.feature strong{color:var(--gold);display:block;margin-bottom:8px}
+.card{transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--gold)}
+.card h3{font-size:18px;min-height:44px}
+.card .meta{font-size:13px;color:var(--muted)}
+.card .btn{margin-top:12px;width:100%}
+.tag{color:var(--gold);font-size:12px;font-weight:bold}
+.filters{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+select,.field{
+  background:#102b43;border:1px solid #54708c;color:white;
+  border-radius:9px;padding:12px;min-width:145px
 }
-.search input {
-  flex:1;
-  min-width:0;
-  padding:17px;
-  border:1px solid #647a95;
-  border-radius:12px 0 0 12px;
-  background:#071525;
-  color:white;
-  font-size:16px;
-}
-button {
-  background:var(--gold);
-  color:#142338;
-  border:0;
-  padding:15px 20px;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-}
-.search button {border-radius:0 12px 12px 0}
-button:hover {background:#ffda88}
-.container {
-  max-width:1250px;
-  margin:auto;
-  padding:30px 20px;
-}
-.catalogues {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
-}
-.catalogue {
-  background:linear-gradient(135deg,#1d4266,#10253d);
-  border:1px solid #6b7891;
-  padding:30px;
-  border-radius:18px;
-  min-height:220px;
-}
-.catalogue h2 {font-size:25px}
-.catalogue p {color:var(--muted)}
-.section-title {
-  color:var(--gold);
-  margin:35px 0 20px;
-}
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:16px;
-}
-.card {
-  background:var(--panel);
-  border:1px solid #375371;
-  border-radius:14px;
-  padding:20px;
-  transition:.2s;
-}
-.card:hover {
-  transform:translateY(-4px);
-  border-color:var(--gold);
-}
-.card h3 {margin:8px 0}
-.card p {color:var(--muted);font-size:14px}
-.symbol {
-  font-size:30px;
-  color:var(--gold);
-}
-.filters {
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-bottom:20px;
-}
-select {
-  padding:12px;
-  border-radius:8px;
-  background:#18314d;
-  color:white;
-  border:1px solid #55718d;
-}
-.tag {
-  color:var(--gold);
-  font-size:12px;
-  font-weight:bold;
-}
-.empty {color:var(--muted)}
-footer {
-  text-align:center;
-  padding:30px;
-  margin-top:40px;
-  border-top:1px solid #30445e;
-  color:var(--muted);
-  font-size:13px;
-}
+.notice{padding:16px;border:1px solid var(--border);background:#10263c;border-radius:12px;color:var(--muted);line-height:1.6}
+.status{color:var(--muted);margin:15px 0}
+.pager{display:flex;justify-content:center;gap:12px;margin:25px 0;align-items:center}
+.pager button:disabled{opacity:.4;cursor:default}
+.detail{margin-top:20px}
+.detail-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;flex-wrap:wrap}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:13px;margin-top:22px}
+.pokemon-card{background:#0a1b2c;border:1px solid var(--border);border-radius:12px;padding:10px}
+.pokemon-card img{display:block;width:100%;aspect-ratio:0.72;object-fit:contain;border-radius:8px}
+.card-placeholder{aspect-ratio:.72;display:grid;place-items:center;background:#1a3852;border-radius:8px;color:var(--muted);font-size:13px;text-align:center}
+.pokemon-card h4{font-size:13px;min-height:30px;margin:10px 0 5px}
+.pokemon-card small{color:var(--muted)}
+.owned{display:block;width:100%;margin-top:10px;padding:8px;border:1px solid var(--gold);border-radius:7px;background:transparent;color:var(--gold)}
+.owned.active{background:var(--gold);color:#102033}
+.hidden{display:none!important}
+footer{border-top:1px solid var(--border);text-align:center;padding:35px 20px;color:var(--muted);font-size:12px;line-height:1.8;margin-top:40px}
+@media(max-width:600px){.hero{padding:50px 16px}.nav{justify-content:center}.searchbar button{padding:12px}.container{padding:20px 14px}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">✦ PokéAtlas</div>
-  <nav>
-    <a href="#accueil">Accueil</a>
-    <a href="#catalogues">Catalogues</a>
-    <a href="#extensions">Extensions</a>
-    <a href="#outils">Outils</a>
-  </nav>
+  <div class="nav">
+    <div class="logo">✦ PokéAtlas</div>
+    <nav>
+      <a href="#accueil">Accueil</a>
+      <a href="#catalogues">Catalogues</a>
+      <a href="#extensions">Extensions</a>
+      <a href="#collection">Ma collection</a>
+    </nav>
+  </div>
 </header>
 
 <section class="hero" id="accueil">
-  <p>EXPLORE • COLLECTIONNE • DÉCOUVRE</p>
+  <div class="eyebrow">EXPLORE • COLLECTIONNE • DÉCOUVRE</div>
   <h1>PokéAtlas</h1>
-  <h2>L'encyclopédie des cartes Pokémon</h2>
-  <p>
-    Extensions, cartes, boosters, ETB,
-    UPC et coffrets français et japonais.
-  </p>
-  <div class="search">
-    <input id="search" type="search"
-      placeholder="Rechercher une extension...">
-    <button onclick="rechercher()">⌕</button>
+  <h3>L'encyclopédie des cartes Pokémon</h3>
+  <p>Des premières éditions aux extensions les plus récentes.<br>France 🇫🇷 et Japon 🇯🇵</p>
+  <div class="searchbar">
+    <input id="search" type="search" placeholder="Rechercher une extension ou un code...">
+    <button class="btn" id="searchButton">Rechercher</button>
   </div>
 </section>
 
 <main class="container">
 
 <section id="catalogues">
-  <div class="catalogues">
-    <div class="catalogue">
-      <h2>🇫🇷 Catalogue français</h2>
-      <p>
-        Découvre les blocs, extensions,
-        cartes et produits scellés français.
-      </p>
-      <button onclick="choisirPays('FR')">
-        Explorer le catalogue →
-      </button>
-    </div>
-    <div class="catalogue">
-      <h2>🇯🇵 Catalogue japonais</h2>
-      <p>
-        Retrouve les extensions japonaises,
-        leurs codes et leurs produits.
-      </p>
-      <button onclick="choisirPays('JP')">
-        Explorer le catalogue →
-      </button>
-    </div>
+  <h2>Explore les catalogues</h2>
+  <div class="countries">
+    <article class="country">
+      <div class="eyebrow">🇫🇷 COLLECTION FRANÇAISE</div>
+      <h3>Catalogue français</h3>
+      <p>Retrouve les blocs historiques, les extensions modernes et leurs cartes.</p>
+      <button class="btn" data-language="fr">Explorer la France →</button>
+    </article>
+    <article class="country">
+      <div class="eyebrow">🇯🇵 COLLECTION JAPONAISE</div>
+      <h3>Catalogue japonais</h3>
+      <p>Explore les extensions japonaises avec leurs codes et listes de cartes.</p>
+      <button class="btn" data-language="ja">Explorer le Japon →</button>
+    </article>
   </div>
 </section>
 
-<h2 class="section-title">Explorer PokéAtlas</h2>
-<div class="grid" id="outils">
-  <div class="card">
-    <div class="symbol">▤</div>
-    <h3>Extensions</h3>
-    <p>Par bloc, année et génération.</p>
+<section>
+  <h2>Tout l'univers des collectionneurs</h2>
+  <div class="features">
+    <div class="feature"><strong>▤ Extensions</strong><p>De la première génération aux séries récentes.</p></div>
+    <div class="feature"><strong>▣ Cartes</strong><p>Noms, numéros et visuels selon les données disponibles.</p></div>
+    <div class="feature"><strong>⬡ Produits scellés</strong><p>Boosters, displays, ETB, UPC et coffrets : rubrique en préparation.</p></div>
+    <div class="feature"><strong>★ Ma collection</strong><p>Coche les cartes que tu possèdes.</p></div>
   </div>
-  <div class="card">
-    <div class="symbol">▣</div>
-    <h3>Cartes</h3>
-    <p>Numéros, raretés et variantes.</p>
+</section>
+
+<section>
+  <h2>Les nouveautés 2026</h2>
+  <div class="notice">
+    Les nouveautés, dont les séries anniversaire, apparaîtront dans le catalogue lorsqu'elles seront référencées dans la source de données.
+    Les noms, dates et produits non vérifiés ne sont pas ajoutés automatiquement.
   </div>
-  <div class="card">
-    <div class="symbol">⬡</div>
-    <h3>Produits scellés</h3>
-    <p>Boosters, displays, ETB et UPC.</p>
-  </div>
-  <div class="card">
-    <div class="symbol">⌕</div>
-    <h3>Recherche avancée</h3>
-    <p>Recherche par pays et extension.</p>
-  </div>
-</div>
+</section>
 
 <section id="extensions">
-  <h2 class="section-title">Catalogue des extensions</h2>
-
+  <h2>Catalogue des extensions</h2>
   <div class="filters">
-    <select id="pays" onchange="afficher()">
-      <option value="ALL">Tous les pays</option>
-      <option value="FR">🇫🇷 France</option>
-      <option value="JP">🇯🇵 Japon</option>
+    <select id="language">
+      <option value="fr">🇫🇷 Français</option>
+      <option value="ja">🇯🇵 Japonais</option>
     </select>
-
-    <select id="bloc" onchange="afficher()">
-      <option value="ALL">Tous les blocs</option>
-      <option value="EV">Écarlate et Violet</option>
-      <option value="EB">Épée et Bouclier</option>
-      <option value="SV">Scarlet & Violet (JP)</option>
+    <select id="series">
+      <option value="all">Toutes les générations</option>
     </select>
-
-    <select id="type" onchange="afficher()">
-      <option value="ALL">Tous les produits</option>
-      <option value="booster">Boosters</option>
-      <option value="display">Displays</option>
-      <option value="etb">ETB</option>
-      <option value="upc">UPC</option>
-      <option value="coffret">Coffrets</option>
+    <select id="sort">
+      <option value="recent">Plus récentes d'abord</option>
+      <option value="old">Plus anciennes d'abord</option>
+      <option value="az">Ordre alphabétique</option>
     </select>
+    <button class="btn btn-outline" id="reset">Réinitialiser</button>
   </div>
+  <div id="status" class="status">Chargement du catalogue...</div>
+  <div id="sets" class="grid"></div>
+  <div class="pager">
+    <button class="btn btn-outline" id="prev">← Précédent</button>
+    <span id="pageInfo"></span>
+    <button class="btn btn-outline" id="next">Suivant →</button>
+  </div>
+</section>
 
-  <div id="resultats" class="grid"></div>
+<section id="detail" class="detail hidden">
+  <div class="detail-head">
+    <div>
+      <div class="tag" id="detailCode"></div>
+      <h2 id="detailName"></h2>
+      <p id="detailInfo"></p>
+    </div>
+    <button class="btn btn-outline" id="closeDetail">Fermer ✕</button>
+  </div>
+  <div id="cardStatus" class="status"></div>
+  <div id="cards" class="card-grid"></div>
+</section>
+
+<section id="collection">
+  <h2>★ Ma collection personnelle</h2>
+  <div class="notice">
+    <strong id="collectionCount">0 carte enregistrée</strong>
+    <p>Ouvre une extension puis coche les cartes que tu possèdes. Ta collection est enregistrée localement sur cet appareil et dans ce navigateur. Elle ne se synchronise pas entre appareils.</p>
+    <button class="btn btn-outline" id="exportCollection">Exporter ma collection</button>
+  </div>
 </section>
 
 </main>
 
 <footer>
-  PokéAtlas © 2026 — Projet indépendant.
-  Non affilié à The Pokémon Company.
-  Les marques citées appartiennent
-  à leurs titulaires respectifs.
+  PokéAtlas © 2026 — Encyclopédie indépendante destinée aux collectionneurs.<br>
+  Non affiliée, sponsorisée ou approuvée par The Pokémon Company, Nintendo ou leurs partenaires.<br>
+  Les noms et marques cités appartiennent à leurs titulaires respectifs.<br>
+  Données de catalogue : TCGdex, sous réserve de disponibilité et de conditions d'utilisation.
 </footer>
 
 <script>
-const extensions = [
- {
-  nom:"Écarlate et Violet",
-  code:"EV01",
-  pays:"FR",
-  bloc:"EV",
-  date:"2023",
-  produits:["booster","display","etb"]
- },
- {
-  nom:"Évolutions à Paldea",
-  code:"EV02",
-  pays:"FR",
-  bloc:"EV",
-  date:"2023",
-  produits:["booster","display","etb"]
- },
- {
-  nom:"Pokémon 151",
-  code:"EV03.5",
-  pays:"FR",
-  bloc:"EV",
-  date:"2023",
-  produits:["booster","etb","upc","coffret"]
- },
- {
-  nom:"Épée et Bouclier",
-  code:"EB01",
-  pays:"FR",
-  bloc:"EB",
-  date:"2020",
-  produits:["booster","display","etb"]
- },
- {
-  nom:"Scarlet ex",
-  code:"SV1S",
-  pays:"JP",
-  bloc:"SV",
-  date:"2023",
-  produits:["booster","display"]
- },
- {
-  nom:"Violet ex",
-  code:"SV1V",
-  pays:"JP",
-  bloc:"SV",
-  date:"2023",
-  produits:["booster","display"]
- }
-];
+const API="https://api.tcgdex.net/v2";
+const PAGE_SIZE=24;
+const state={
+  language:"fr",series:[],sets:[],filter:"all",
+  search:"",sort:"recent",page:1
+};
 
-function afficher() {
- const pays=document.getElementById("pays").value;
- const bloc=document.getElementById("bloc").value;
- const type=document.getElementById("type").value;
- const recherche=document.getElementById("search")
-   .value.toLowerCase().trim();
+const $=id=>document.getElementById(id);
+const storageKey="pokeatlas_collection_v1";
 
- const liste=extensions.filter(e=>
-  (pays==="ALL" || e.pays===pays) &&
-  (bloc==="ALL" || e.bloc===bloc) &&
-  (type==="ALL" || e.produits.includes(type)) &&
-  (e.nom.toLowerCase().includes(recherche) ||
-   e.code.toLowerCase().includes(recherche))
- );
+function loadCollection(){
+  try{
+    const value=JSON.parse(localStorage.getItem(storageKey)||"{}");
+    return value && typeof value==="object" && !Array.isArray(value)?value:{};
+  }catch{return {}}
+}
+let collection=loadCollection();
 
- const zone=document.getElementById("resultats");
- zone.replaceChildren();
-
- if(!liste.length) {
-  const p=document.createElement("p");
-  p.className="empty";
-  p.textContent="Aucun résultat trouvé.";
-  zone.appendChild(p);
-  return;
- }
-
- liste.forEach(e=>{
-  const card=document.createElement("article");
-  card.className="card";
-
-  const tag=document.createElement("div");
-  tag.className="tag";
-  tag.textContent=e.pays==="FR"
-   ? "🇫🇷 FRANCE" : "🇯🇵 JAPON";
-
-  const title=document.createElement("h3");
-  title.textContent=e.nom;
-
-  const code=document.createElement("p");
-  code.textContent=e.code+" • "+e.date;
-
-  const types=document.createElement("p");
-  types.textContent=e.produits.join(" • ").toUpperCase();
-
-  card.append(tag,title,code,types);
-  zone.appendChild(card);
- });
+function saveCollection(){
+  try{localStorage.setItem(storageKey,JSON.stringify(collection))}
+  catch{alert("Impossible d'enregistrer la collection sur cet appareil.")}
+  updateCount();
+}
+function updateCount(){
+  const count=Object.keys(collection).filter(k=>collection[k]).length;
+  $("collectionCount").textContent=count+" carte"+(count>1?"s":"")+" enregistrée"+(count>1?"s":"");
 }
 
-function choisirPays(pays) {
- document.getElementById("pays").value=pays;
- afficher();
- document.getElementById("extensions")
-   .scrollIntoView({behavior:"smooth"});
+async function getJSON(path){
+  const response=await fetch(API+path);
+  if(!response.ok)throw new Error("Erreur "+response.status);
+  return response.json();
 }
 
-function rechercher() {
- afficher();
- document.getElementById("extensions")
-   .scrollIntoView({behavior:"smooth"});
+function cleanDate(date){
+  if(!date)return "";
+  const time=Date.parse(date);
+  return Number.isNaN(time)?"":new Date(time).toLocaleDateString("fr-FR");
 }
 
-document.getElementById("search")
- .addEventListener("input",afficher);
+function yearOf(date){
+  return date?String(date).slice(0,4):"Date inconnue";
+}
 
-afficher();
+function imageURL(url){
+  if(typeof url!=="string")return "";
+  if(!url.startsWith("https://"))return "";
+  return url;
+}
+
+async function loadCatalog(language){
+  state.language=language;
+  state.page=1;
+  state.filter="all";
+  state.series=[];
+  state.sets=[];
+  $("language").value=language;
+  $("sets").replaceChildren();
+  $("series").innerHTML='<option value="all">Toutes les générations</option>';
+  $("status").textContent="Chargement des séries "+(language==="fr"?"françaises":"japonaises")+"...";
+  $("detail").classList.add("hidden");
+  $("prev").disabled=true;
+  $("next").disabled=true;
+
+  try{
+    const series=await getJSON("/"+language+"/series");
+    state.series=Array.isArray(series)?series:[];
+    for(const s of state.series){
+      const option=document.createElement("option");
+      option.value=s.id;
+      option.textContent=s.name||s.id;
+      $("series").appendChild(option);
+    }
+
+    const allSets=[];
+    const results=await Promise.allSettled(
+      state.series.map(s=>getJSON("/"+language+"/series/"+encodeURIComponent(s.id)))
+    );
+
+    results.forEach((result,index)=>{
+      if(result.status!=="fulfilled")return;
+      const data=result.value;
+      const sets=Array.isArray(data)?data:
+        Array.isArray(data.sets)?data.sets:[];
+      for(const set of sets){
+        allSets.push({
+          ...set,
+          seriesId:state.series[index].id,
+          seriesName:state.series[index].name
+        });
+      }
+    });
+
+    const unique=new Map();
+    allSets.forEach(s=>{if(s.id)unique.set(s.id,s)});
+    state.sets=[...unique.values()];
+    const failures=results.filter(r=>r.status==="rejected").length;
+    $("status").textContent=failures
+      ? "Certaines séries n'ont pas pu être chargées ("+failures+")."
+      : "";
+    renderSets();
+  }catch(error){
+    $("status").textContent="Impossible de charger le catalogue. Vérifie ta connexion et réessaie.";
+    console.error(error);
+  }
+}
+
+function filteredSets(){
+  let list=state.sets.filter(s=>{
+    const name=(s.name||"").toLowerCase();
+    const code=(s.id||"").toLowerCase();
+    return (state.filter==="all"||s.seriesId===state.filter)
+      &&(name.includes(state.search)||code.includes(state.search));
+  });
+
+  list.sort((a,b)=>{
+    if(state.sort==="az")return (a.name||"").localeCompare(b.name||"","fr");
+    const diff=(Date.parse(b.releaseDate)||0)-(Date.parse(a.releaseDate)||0);
+    return state.sort==="old"?-diff:diff;
+  });
+  return list;
+}
+
+function renderSets(){
+  const list=filteredSets();
+  const pages=Math.max(1,Math.ceil(list.length/PAGE_SIZE));
+  state.page=Math.min(state.page,pages);
+  const start=(state.page-1)*PAGE_SIZE;
+  const visible=list.slice(start,start+PAGE_SIZE);
+  $("sets").replaceChildren();
+
+  for(const set of visible){
+    const card=document.createElement("article");
+    card.className="card";
+
+    const tag=document.createElement("div");
+    tag.className="tag";
+    tag.textContent=(state.language==="fr"?"🇫🇷 FRANCE":"🇯🇵 JAPON")+" • "+yearOf(set.releaseDate);
+
+    const h=document.createElement("h3");
+    h.textContent=set.name||set.id;
+
+    const meta=document.createElement("p");
+    meta.className="meta";
+    meta.textContent=(set.id||"")+" • "+(set.seriesName||"Série");
+
+    const btn=document.createElement("button");
+    btn.className="btn";
+    btn.textContent="Voir les cartes →";
+    btn.addEventListener("click",()=>openSet(set.id));
+
+    card.append(tag,h,meta,btn);
+    $("sets").appendChild(card);
+  }
+
+  if(!list.length){
+    const p=document.createElement("p");
+    p.textContent="Aucune extension trouvée pour ces filtres.";
+    $("sets").appendChild(p);
+  }
+  $("pageInfo").textContent="Page "+state.page+" / "+pages;
+  $("prev").disabled=state.page<=1;
+  $("next").disabled=state.page>=pages;
+  if(!$("status").textContent.includes("Certaines")){
+    $("status").textContent=list.length+" extension(s) trouvée(s)";
+  }
+}
+
+let requestNumber=0;
+async function openSet(id){
+  const request=++requestNumber;
+  const language=state.language;
+  $("detail").classList.remove("hidden");
+  $("detailCode").textContent=id+" • "+(language==="fr"?"FRANCE":"JAPON");
+  $("detailName").textContent="Chargement...";
+  $("detailInfo").textContent="";
+  $("cards").replaceChildren();
+  $("cardStatus").textContent="Chargement des cartes...";
+  $("detail").scrollIntoView({behavior:"smooth"});
+
+  try{
+    const set=await getJSON("/"+language+"/sets/"+encodeURIComponent(id));
+    if(request!==requestNumber)return;
+    $("detailName").textContent=set.name||id;
+    $("detailInfo").textContent=[
+      cleanDate(set.releaseDate),
+      set.cardCount?.total ? set.cardCount.total+" cartes référencées" : ""
+    ].filter(Boolean).join(" • ");
+
+    const cards=Array.isArray(set.cards)?set.cards:[];
+    $("cardStatus").textContent=cards.length+" carte(s) disponibles dans la base";
+    const fragment=document.createDocumentFragment();
+
+    cards.forEach(card=>{
+      const key=language+":"+id+":"+card.id;
+      const item=document.createElement("article");
+      item.className="pokemon-card";
+
+      const url=imageURL(card.image);
+      if(url){
+        const img=document.createElement("img");
+        img.src=url+"/low.webp";
+        img.alt=card.name||"Carte";
+        img.loading="lazy";
+        img.onerror=()=>{
+          img.replaceWith(makePlaceholder());
+        };
+        item.appendChild(img);
+      }else item.appendChild(makePlaceholder());
+
+      const name=document.createElement("h4");
+      name.textContent=card.name||"Carte sans nom";
+
+      const number=document.createElement("small");
+      number.textContent=card.localId?"N° "+card.localId:card.id;
+
+      const owned=document.createElement("button");
+      owned.className="owned"+(collection[key]?" active":"");
+      owned.textContent=collection[key]?"✓ Possédée":"+ Ajouter";
+      owned.addEventListener("click",()=>{
+        if(collection[key])delete collection[key];
+        else collection[key]=true;
+        owned.classList.toggle("active",!!collection[key]);
+        owned.textContent=collection[key]?"✓ Possédée":"+ Ajouter";
+        saveCollection();
+      });
+
+      item.append(name,number,owned);
+      fragment.appendChild(item);
+    });
+    $("cards").appendChild(fragment);
+  }catch(error){
+    if(request!==requestNumber)return;
+    $("detailName").textContent="Chargement impossible";
+    $("cardStatus").textContent="Impossible de récupérer cette extension pour le moment.";
+    console.error(error);
+  }
+}
+
+function makePlaceholder(){
+  const div=document.createElement("div");
+  div.className="card-placeholder";
+  div.textContent="Visuel indisponible";
+  return div;
+}
+
+$("language").addEventListener("change",e=>loadCatalog(e.target.value));
+$("series").addEventListener("change",e=>{
+  state.filter=e.target.value;state.page=1;renderSets();
+});
+$("sort").addEventListener("change",e=>{
+  state.sort=e.target.value;state.page=1;renderSets();
+});
+$("search").addEventListener("input",e=>{
+  state.search=e.target.value.toLowerCase().trim();
+  state.page=1;renderSets();
+});
+$("searchButton").addEventListener("click",()=>{
+  $("extensions").scrollIntoView({behavior:"smooth"});
+});
+$("reset").addEventListener("click",()=>{
+  state.search="";state.filter="all";state.sort="recent";state.page=1;
+  $("search").value="";$("series").value="all";$("sort").value="recent";
+  renderSets();
+});
+$("prev").addEventListener("click",()=>{
+  if(state.page>1){state.page--;renderSets();$("extensions").scrollIntoView()}
+});
+$("next").addEventListener("click",()=>{
+  state.page++;renderSets();$("extensions").scrollIntoView();
+});
+$("closeDetail").addEventListener("click",()=>{
+  requestNumber++;
+  $("detail").classList.add("hidden");
+});
+document.querySelectorAll("[data-language]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    loadCatalog(button.dataset.language);
+    $("extensions").scrollIntoView({behavior:"smooth"});
+  });
+});
+$("exportCollection").addEventListener("click",()=>{
+  const keys=Object.keys(collection).filter(k=>collection[k]);
+  const blob=new Blob([JSON.stringify({
+    application:"PokéAtlas",cards:keys
+  },null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement("a");
+  link.href=url;
+  link.download="pokeatlas-ma-collection.json";
+  link.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+updateCount();
+loadCatalog("fr");
 </script>
-
 </body>
 </html>
